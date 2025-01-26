@@ -15,19 +15,20 @@
         .container {
             width: 400px;
             margin: 100px auto;
-            padding: 20px;
+            padding: 30px;
             background-color: white;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             text-align: center;
             color: #333;
+            font-size: 24px;
         }
 
         .form-group {
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
 
         .form-group label {
@@ -39,30 +40,35 @@
 
         .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #4CAF50;
         }
 
         .form-group input[type="submit"] {
-            background-color: green;
+            background-color: #4CAF50;
             color: white;
             cursor: pointer;
             border: none;
-            width: 100%;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .form-group input[type="submit"]:hover {
-            background-color: darkgreen;
+            background-color: #45a049;
         }
 
         .switch-link {
-            text-align: left;
+            text-align: center;
             margin-top: 20px;
         }
 
@@ -75,16 +81,11 @@
             text-decoration: none;
         }
 
-        /* Centering the submit button */
-        .form-group input[type="submit"] {
-            width: 50%;
-            margin-left: 25%;
-            transform: translateX(-50%);
-        }
-
+        /* Error message styling */
         .error {
             color: red;
             font-size: 14px;
+            margin-top: 5px;
         }
 
     </style>
@@ -105,7 +106,7 @@
         <div class="form-group">
             <label for="confirm_password">Xác nhận mật khẩu</label>
             <input type="password" id="confirm_password" name="confirm_password" required>
-            <div id="error_message" class="error"></div>
+            <div id="error_message" class="error"></div> <!-- Thông báo lỗi sẽ xuất hiện ở đây -->
         </div>
         <div class="form-group">
             <input type="submit" value="Đăng ký">
@@ -118,15 +119,22 @@
 
 <script>
     document.getElementById('signupForm').addEventListener('submit', function(e) {
+        var username = document.getElementById('username').value;
         var password = document.getElementById('password').value;
         var confirmPassword = document.getElementById('confirm_password').value;
         var errorMessage = document.getElementById('error_message');
         
-        if (password !== confirmPassword) {
+        // Kiểm tra tất cả các trường có bị bỏ trống không
+        if (username === "" || password === "" || confirmPassword === "") {
             e.preventDefault(); // Ngừng gửi form
-            errorMessage.textContent = 'Mật khẩu và xác nhận mật khẩu phải giống nhau.';
+            errorMessage.textContent = 'Tất cả các trường đều phải điền đầy đủ.';
+        } 
+        // Kiểm tra mật khẩu và xác nhận mật khẩu có khớp không
+        else if (password !== confirmPassword) {
+            e.preventDefault(); // Ngừng gửi form
+            errorMessage.textContent = 'Mật khẩu và xác nhận mật khẩu không khớp.';
         } else {
-            errorMessage.textContent = ''; // Xóa thông báo lỗi nếu mật khẩu trùng khớp
+            errorMessage.textContent = ''; // Xóa thông báo lỗi nếu tất cả đúng
         }
     });
 </script>
