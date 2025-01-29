@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connect.php';
+include 'C:/xampp/htdocs/duyminhnguyen140908/db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Lấy thông tin người dùng từ form
