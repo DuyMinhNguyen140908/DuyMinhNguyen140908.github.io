@@ -1,11 +1,11 @@
 <?php
-$servername = "localhost";
-$username = "root"; // Thay đổi với tên người dùng của bạn
-$password = ""; // Thay đổi với mật khẩu của bạn
-$dbname = "your_database_name"; // Thay đổi với tên cơ sở dữ liệu của bạn
+$host = "localhost";  // Địa chỉ của MySQL, mặc định là localhost
+$username = "root";   // Tên đăng nhập MySQL, mặc định là root
+$password = "";       // Mật khẩu MySQL, mặc định là trống
+$dbname = "your_database_name"; // Thay bằng tên cơ sở dữ liệu bạn vừa tạo
 
 // Tạo kết nối
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $dbname);
 
 // Kiểm tra kết nối
 if ($conn->connect_error) {
