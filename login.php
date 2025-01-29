@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
 
-
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         // Kiểm tra mật khẩu
@@ -20,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Đăng nhập thành công
             $_SESSION['username'] = $username;
             header("Location: dashboard.php"); // Chuyển hướng đến trang dashboard
+            exit();
         } else {
             echo "Sai mật khẩu!";
         }
