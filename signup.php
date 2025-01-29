@@ -15,16 +15,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Bảo mật mật khẩu bằng cách mã hóa
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Thêm vào cơ sở dữ liệu
-    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
+    // Kiểm tra tên người dùng đã tồn tại chưa
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Đăng ký thành công!";
-        header("Location: login.html"); // Chuyển hướng về trang login
-    } else {
-        echo "Lỗi: " . $sql . "<br>" . $conn->error;
+    if ($result->num_rows > 0) {
+        echo "Tên đăng nhập đã tồn tại!";
+        exit();
     }
 
-    $conn->close();
+    // Thêm vào cơ sở dữ liệu
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $username, $hashed_password);
+    $stmt->execute();
+
+    // Đăng ký thành công, chuyển hướng về trang đăng nhập
+    header("Location: login.html");
+    exit();
 }
+
+$conn->close();
 ?>
