@@ -54,3 +54,10 @@
             font-weight: bold;
             z-index: 1000;
         }
+        #valentineGif {
+            display: block;
+            margin: 0 auto;
+            width: 300px; /* Hoặc to hơn nếu muốn */
+            height: auto;
+        }
+
