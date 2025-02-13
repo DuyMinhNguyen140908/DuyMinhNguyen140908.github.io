@@ -101,18 +101,21 @@
                 noBtn.style.left = `${noX}px`;
                 noBtn.style.top = `${noY}px`;
             } else {
+                // Ẩn nút NO ngay lập tức
+                noBtn.style.display = "none";
+
                 // Lần cuối, khung xanh YES che toàn màn hình
                 yesBtn.style.position = "fixed";
-                yesBtn.style.top = "0";
-                yesBtn.style.left = "0";
+                yesBtn.style.top = "50%";
+                yesBtn.style.left = "50%";
                 yesBtn.style.width = "200vw";
                 yesBtn.style.height = "200vh";
+                yesBtn.style.transform = "translate(-50%, -50%)"; // Căn giữa chính xác
                 yesBtn.style.zIndex = "999";
                 yesBtn.style.transition = "all 0.7s ease";
 
                 setTimeout(() => {
                     question.style.display = "none";
-                    noBtn.style.display = "none";
                     yesBtn.style.fontSize = "30vw"; // Chữ YES cực to
                     yesBtn.textContent = "YES";
                 }, 700);
