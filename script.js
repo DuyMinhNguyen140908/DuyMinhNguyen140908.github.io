@@ -8,63 +8,60 @@ const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const finalMessage = document.getElementById("finalMessage");
 const question = document.getElementById("question");
+const gifImage = document.getElementById("gifImage");
 
 let baseSize = 24;
-let increaseFactor = 1.45; // Tăng YES 1.45 lần mỗi lần
+let increaseFactor = 1.4;
 
 noBtn.addEventListener("click", () => {
     if (messageIndex < messages.length) {
         noBtn.textContent = messages[messageIndex++];
-
-        // Phóng to YES
         baseSize *= increaseFactor;
         yesBtn.style.fontSize = `${baseSize}px`;
 
-        // Căn giữa YES
         yesBtn.style.position = "fixed";
         yesBtn.style.top = "50%";
         yesBtn.style.left = "50%";
         yesBtn.style.transform = "translate(-50%, -50%)";
 
-        // Lấy vị trí YES
         let yesRect = yesBtn.getBoundingClientRect();
         let noX, noY;
+        let offset = yesRect.width * 0.4;
 
-        let offset = yesRect.width * 0.6; // Khoảng cách tối thiểu giữa NO và YES
-        let direction = Math.floor(Math.random() * 4); // 0: trái, 1: phải, 2: trên, 3: dưới
-
-        if (direction === 0) { // Trái
+        let direction = Math.floor(Math.random() * 4);
+        if (direction === 0) {
             noX = yesRect.left - noBtn.offsetWidth - offset;
             noY = yesRect.top + (yesRect.height - noBtn.offsetHeight) / 2;
-        } else if (direction === 1) { // Phải
+        } else if (direction === 1) {
             noX = yesRect.right + offset;
             noY = yesRect.top + (yesRect.height - noBtn.offsetHeight) / 2;
-        } else if (direction === 2) { // Trên
+        } else if (direction === 2) {
             noX = yesRect.left + (yesRect.width - noBtn.offsetWidth) / 2;
             noY = yesRect.top - noBtn.offsetHeight - offset;
-        } else { // Dưới
+        } else {
             noX = yesRect.left + (yesRect.width - noBtn.offsetWidth) / 2;
             noY = yesRect.bottom + offset;
         }
 
-        // Kiểm tra nếu NO bị ra ngoài màn hình
-        if (noX < 10) noX = yesRect.left + offset;
-        if (noX + noBtn.offsetWidth > window.innerWidth) noX = yesRect.right - noBtn.offsetWidth - offset;
-        if (noY < 10) noY = yesRect.top + offset;
-        if (noY + noBtn.offsetHeight > window.innerHeight) noY = yesRect.bottom - noBtn.offsetHeight - offset;
+        let screenW = window.innerWidth;
+        let screenH = window.innerHeight;
+        let minDist = 30;
 
-        // Đặt lại vị trí NO
+        if (noX < minDist) noX = yesRect.right + minDist;
+        if (noX + noBtn.offsetWidth > screenW - minDist) noX = yesRect.left - noBtn.offsetWidth - minDist;
+        if (noY < minDist) noY = yesRect.bottom + minDist;
+        if (noY + noBtn.offsetHeight > screenH - minDist) noY = yesRect.top - noBtn.offsetHeight - minDist;
+
         noBtn.style.left = `${noX}px`;
         noBtn.style.top = `${noY}px`;
     } else {
-        // Lần cuối, YES phủ màn hình
         yesBtn.style.width = "100vw";
         yesBtn.style.height = "100vh";
         yesBtn.style.fontSize = "15vw";
         yesBtn.textContent = "YES";
         yesBtn.style.zIndex = "999";
 
-        // Đảm bảo "Code by" không bị che
+        noBtn.style.display = "none";
         document.getElementById("credit").style.zIndex = "1000";
     }
 });
@@ -74,7 +71,5 @@ yesBtn.addEventListener("click", () => {
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
     finalMessage.style.display = "block";
-});
-document.getElementById("yesBtn").addEventListener("click", () => {
-    document.getElementById("valentineGif").src = "https://github.com/user-attachments/assets/ab57f2af-618d-4006-8025-97e851ddda5d";
-});
+
+    // Đổi GIF và tăng kích 
