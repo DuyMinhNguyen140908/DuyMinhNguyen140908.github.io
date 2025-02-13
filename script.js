@@ -20,10 +20,20 @@ noBtn.addEventListener("click", () => {
         noBtn.textContent = messages[messageIndex];
         messageIndex++;
 
+        // Phóng to nút YES
         let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
         yesBtn.style.fontSize = `${currentSize * 1.5}px`;
+
+        // Di chuyển nút NO đến vị trí ngẫu nhiên trong trang
+        const maxX = window.innerWidth - noBtn.offsetWidth;
+        const maxY = window.innerHeight - noBtn.offsetHeight;
+        const newX = Math.floor(Math.random() * maxX);
+        const newY = Math.floor(Math.random() * maxY);
+        noBtn.style.position = "absolute";
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
     } else {
-        // Khi Yes đã phóng to che màn hình, nhấn Yes để hiện "Knew you would say yes"
+        // Khi YES che màn hình
         yesBtn.style.fontSize = "100vw";
         yesBtn.style.height = "100vh";
         yesBtn.style.position = "fixed";
