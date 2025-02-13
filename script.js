@@ -75,3 +75,6 @@ yesBtn.addEventListener("click", () => {
     noBtn.style.display = "none";
     finalMessage.style.display = "block";
 });
+document.getElementById("yesBtn").addEventListener("click", () => {
+    document.getElementById("valentineGif").src = "https://github.com/user-attachments/assets/ab57f2af-618d-4006-8025-97e851ddda5d";
+});
