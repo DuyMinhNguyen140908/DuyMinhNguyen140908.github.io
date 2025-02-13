@@ -73,22 +73,20 @@
         const finalMessage = document.getElementById("finalMessage");
         const question = document.getElementById("question");
 
-        let fontSize = 24;
-        let stepSize = 1.7;
-        let maxFontSize = 120;
+        let baseSize = 24;
+        let increaseFactor = 1.45; // Tăng YES 1.45 lần mỗi lần
         let yesX = yesBtn.offsetLeft;
         let yesY = yesBtn.offsetTop;
 
         noBtn.addEventListener("click", () => {
             if (messageIndex < messages.length) {
                 noBtn.textContent = messages[messageIndex++];
-                
-                // Phóng to YES thấy rõ hơn
-                fontSize *= stepSize;
-                if (fontSize > maxFontSize) fontSize = maxFontSize;
-                yesBtn.style.fontSize = `${fontSize}px`;
 
-                // Di chuyển YES gần tâm hơn
+                // Phóng to YES hơn 1.5 lần mỗi lần
+                baseSize *= increaseFactor;
+                yesBtn.style.fontSize = `${baseSize}px`;
+
+                // Di chuyển YES gần trung tâm hơn
                 let centerX = window.innerWidth / 2 - yesBtn.offsetWidth / 2;
                 let centerY = window.innerHeight / 2 - yesBtn.offsetHeight / 2;
                 yesX = (yesX + centerX) / 2;
@@ -107,15 +105,15 @@
                 yesBtn.style.position = "fixed";
                 yesBtn.style.top = "0";
                 yesBtn.style.left = "0";
-                yesBtn.style.width = "150vw";
-                yesBtn.style.height = "150vh";
+                yesBtn.style.width = "200vw";
+                yesBtn.style.height = "200vh";
                 yesBtn.style.zIndex = "999";
                 yesBtn.style.transition = "all 0.7s ease";
 
                 setTimeout(() => {
                     question.style.display = "none";
                     noBtn.style.display = "none";
-                    yesBtn.style.fontSize = "24vw"; // Chữ YES x2 nhưng vẫn nằm trong màn hình
+                    yesBtn.style.fontSize = "30vw"; // Chữ YES cực to
                     yesBtn.textContent = "YES";
                 }, 700);
             }
