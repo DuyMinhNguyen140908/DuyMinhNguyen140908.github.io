@@ -87,39 +87,52 @@
                 noBtn.textContent = messages[messageIndex];
                 messageIndex++;
 
-                // Phóng to YES nhưng không quá lớn
+                // Phóng to YES nhưng giữ trong mức hợp lý
                 fontSize *= 1.3;
-                if (fontSize > 50) fontSize = 50; // Giới hạn YES tối đa 50px
+                if (fontSize > 50) fontSize = 50; 
                 yesBtn.style.fontSize = `${fontSize}px`;
 
-                // Dịch chuyển YES vào giữa từ từ
+                // Dịch YES dần vào giữa
                 yesX = (yesX + centerX) / 2;
                 yesY = (yesY + centerY) / 2;
-                yesBtn.style.position = "absolute";
                 yesBtn.style.left = `${yesX}px`;
                 yesBtn.style.top = `${yesY}px`;
 
-                // Di chuyển NO nằm kế bên YES nhưng không đè lên
-                let noX = yesX + yesBtn.offsetWidth + 10;
-                if (noX + noBtn.offsetWidth > window.innerWidth) {
-                    noX = yesX - noBtn.offsetWidth - 10;
+                // Di chuyển NO xuống hoặc qua phải (random)
+                let moveDirection = Math.random() > 0.5 ? "down" : "right";
+                let noX = noBtn.offsetLeft;
+                let noY = noBtn.offsetTop;
+
+                if (moveDirection === "down") {
+                    noY += 50;
+                    if (noY + noBtn.offsetHeight > window.innerHeight) {
+                        noY = noBtn.offsetTop - 50; // Nếu chạm đáy, đẩy lên
+                    }
+                } else {
+                    noX += 50;
+                    if (noX + noBtn.offsetWidth > window.innerWidth) {
+                        noX = noBtn.offsetLeft - 50; // Nếu chạm mép phải, đẩy sang trái
+                    }
                 }
-                noBtn.style.position = "absolute";
+
                 noBtn.style.left = `${noX}px`;
-                noBtn.style.top = `${yesY}px`;
+                noBtn.style.top = `${noY}px`;
             } else {
-                // Khi YES đã đủ to, phủ toàn màn hình nhưng không quá mất chữ
-                yesBtn.style.fontSize = "10vw"; // YES sẽ to nhưng vẫn đọc được
-                yesBtn.style.width = "80vw";
-                yesBtn.style.height = "40vh";
+                // Ở lần nhấn cuối: YES đè lên NO, giữ nguyên font-size nhưng phóng to khung
+                yesBtn.style.fontSize = "50px"; // Giữ nguyên cỡ chữ
+                yesBtn.style.width = "90vw";
+                yesBtn.style.height = "50vh";
                 yesBtn.style.position = "fixed";
-                yesBtn.style.top = "30vh";
-                yesBtn.style.left = "10vw";
+                yesBtn.style.top = "25vh";
+                yesBtn.style.left = "5vw";
                 yesBtn.style.textAlign = "center";
                 yesBtn.style.display = "flex";
                 yesBtn.style.alignItems = "center";
                 yesBtn.style.justifyContent = "center";
-                yesBtn.textContent = "Click me!";
+                yesBtn.textContent = "YES";
+
+                // Xóa NO khỏi màn hình
+                noBtn.style.display = "none";
             }
         });
 
