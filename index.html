@@ -25,7 +25,7 @@
 
         .btn {
             position: absolute;
-            font-size: 20px;
+            font-size: 24px;
             padding: 10px 20px;
             border: none;
             cursor: pointer;
@@ -73,9 +73,9 @@
         const finalMessage = document.getElementById("finalMessage");
         const question = document.getElementById("question");
 
-        let fontSize = 20;
-        let stepSize = 1.5;
-        let maxFontSize = 100;
+        let fontSize = 24;
+        let stepSize = 1.7;
+        let maxFontSize = 120;
         let yesX = yesBtn.offsetLeft;
         let yesY = yesBtn.offsetTop;
 
@@ -83,12 +83,12 @@
             if (messageIndex < messages.length) {
                 noBtn.textContent = messages[messageIndex++];
                 
-                // Phóng to YES đều đặn
+                // Phóng to YES thấy rõ hơn
                 fontSize *= stepSize;
                 if (fontSize > maxFontSize) fontSize = maxFontSize;
                 yesBtn.style.fontSize = `${fontSize}px`;
 
-                // Di chuyển YES gần tâm màn hình hơn
+                // Di chuyển YES gần tâm hơn
                 let centerX = window.innerWidth / 2 - yesBtn.offsetWidth / 2;
                 let centerY = window.innerHeight / 2 - yesBtn.offsetHeight / 2;
                 yesX = (yesX + centerX) / 2;
@@ -96,10 +96,10 @@
                 yesBtn.style.left = `${yesX}px`;
                 yesBtn.style.top = `${yesY}px`;
 
-                // NO chạy xuống dưới hoặc sang phải
-                let noX = yesX + yesBtn.offsetWidth + 20;
+                // NO chạy gần YES nhưng không chạm vào
+                let noX = yesX + yesBtn.offsetWidth + 50;
                 let noY = yesY + 50;
-                if (Math.random() > 0.5) noX = yesX - noBtn.offsetWidth - 20;
+                if (Math.random() > 0.5) noX = yesX - noBtn.offsetWidth - 50;
                 noBtn.style.left = `${noX}px`;
                 noBtn.style.top = `${noY}px`;
             } else {
@@ -107,15 +107,15 @@
                 yesBtn.style.position = "fixed";
                 yesBtn.style.top = "0";
                 yesBtn.style.left = "0";
-                yesBtn.style.width = "100vw";
-                yesBtn.style.height = "100vh";
+                yesBtn.style.width = "150vw";
+                yesBtn.style.height = "150vh";
                 yesBtn.style.zIndex = "999";
                 yesBtn.style.transition = "all 0.7s ease";
 
                 setTimeout(() => {
                     question.style.display = "none";
                     noBtn.style.display = "none";
-                    yesBtn.style.fontSize = "10vw"; // Giữ chữ YES rõ ràng
+                    yesBtn.style.fontSize = "24vw"; // Chữ YES x2 nhưng vẫn nằm trong màn hình
                     yesBtn.textContent = "YES";
                 }, 700);
             }
