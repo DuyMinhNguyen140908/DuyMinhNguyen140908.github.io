@@ -1,6 +1,6 @@
 let messageIndex = 0;
 const messages = [
-    "Are you sure?", "Really sure?", "Are you positive?", "Agree, please!",
+    "Are you sure?", "Really sure?", "Are you positive?", "Agree, please!", 
     "Just think about it...", "I will be really sad...", "Very very sad..."
 ];
 
