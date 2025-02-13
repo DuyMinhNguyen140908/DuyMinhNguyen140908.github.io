@@ -52,27 +52,25 @@
             color: red;
         }
 
-        /* Code by Nguyễn Duy Minh */
-        .author {
+        #credit {
             position: fixed;
             bottom: 10px;
-            right: 10px;
-            font-size: 16px;
+            right: 15px;
+            font-size: 14px;
             color: black;
             font-weight: bold;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-    <h1 id="question">Will you be my valentine??</h1>
+    <h1 id="question">Will you go out on Valentine's Day with me??</h1>
     <div class="container">
         <button id="yesBtn" class="btn">Yes</button>
         <button id="noBtn" class="btn">No</button>
     </div>
     <h1 id="finalMessage">Knew you would say yes ❤️</h1>
-
-    <!-- Dòng chữ cố định ở góc phải dưới -->
-    <div class="author">Code by: Nguyễn Duy Minh</div>
+    <div id="credit">Code by: Nguyễn Duy Minh</div>
 
     <script>
         let messageIndex = 0;
@@ -88,50 +86,61 @@
 
         let baseSize = 24;
         let increaseFactor = 1.45; // Tăng YES 1.45 lần mỗi lần
-        let yesX = yesBtn.offsetLeft;
-        let yesY = yesBtn.offsetTop;
 
         noBtn.addEventListener("click", () => {
             if (messageIndex < messages.length) {
                 noBtn.textContent = messages[messageIndex++];
 
-                // Phóng to YES hơn 1.5 lần mỗi lần
+                // Phóng to YES
                 baseSize *= increaseFactor;
                 yesBtn.style.fontSize = `${baseSize}px`;
 
-                // Di chuyển YES gần trung tâm hơn
-                let centerX = window.innerWidth / 2 - yesBtn.offsetWidth / 2;
-                let centerY = window.innerHeight / 2 - yesBtn.offsetHeight / 2;
-                yesX = (yesX + centerX) / 2;
-                yesY = (yesY + centerY) / 2;
-                yesBtn.style.left = `${yesX}px`;
-                yesBtn.style.top = `${yesY}px`;
-
-                // NO chạy gần YES nhưng không chạm vào
-                let noX = yesX + yesBtn.offsetWidth + 50;
-                let noY = yesY + 50;
-                if (Math.random() > 0.5) noX = yesX - noBtn.offsetWidth - 50;
-                noBtn.style.left = `${noX}px`;
-                noBtn.style.top = `${noY}px`;
-            } else {
-                // Ẩn nút NO ngay lập tức
-                noBtn.style.display = "none";
-
-                // Lần cuối, khung xanh YES che toàn màn hình
+                // Căn giữa YES
                 yesBtn.style.position = "fixed";
                 yesBtn.style.top = "50%";
                 yesBtn.style.left = "50%";
-                yesBtn.style.width = "200vw";
-                yesBtn.style.height = "200vh";
-                yesBtn.style.transform = "translate(-50%, -50%)"; // Căn giữa chính xác
-                yesBtn.style.zIndex = "999";
-                yesBtn.style.transition = "all 0.7s ease";
+                yesBtn.style.transform = "translate(-50%, -50%)";
 
-                setTimeout(() => {
-                    question.style.display = "none";
-                    yesBtn.style.fontSize = "30vw"; // Chữ YES cực to
-                    yesBtn.textContent = "YES";
-                }, 700);
+                // Lấy vị trí YES
+                let yesRect = yesBtn.getBoundingClientRect();
+                let noX, noY;
+
+                // Random vị trí NO (trái, phải, trên, dưới)
+                let direction = Math.floor(Math.random() * 4); // 0: trái, 1: phải, 2: trên, 3: dưới
+                let offset = 20; // Khoảng cách tối thiểu giữa NO và YES
+
+                if (direction === 0) { // Trái
+                    noX = yesRect.left - noBtn.offsetWidth - offset;
+                    noY = yesRect.top + (yesRect.height - noBtn.offsetHeight) / 2;
+                } else if (direction === 1) { // Phải
+                    noX = yesRect.right + offset;
+                    noY = yesRect.top + (yesRect.height - noBtn.offsetHeight) / 2;
+                } else if (direction === 2) { // Trên
+                    noX = yesRect.left + (yesRect.width - noBtn.offsetWidth) / 2;
+                    noY = yesRect.top - noBtn.offsetHeight - offset;
+                } else { // Dưới
+                    noX = yesRect.left + (yesRect.width - noBtn.offsetWidth) / 2;
+                    noY = yesRect.bottom + offset;
+                }
+
+                // Kiểm tra nếu NO bị ra ngoài màn hình, thì đặt lại gần YES hơn
+                if (noX < 10) noX = yesRect.left + offset;
+                if (noX + noBtn.offsetWidth > window.innerWidth) noX = yesRect.right - noBtn.offsetWidth - offset;
+                if (noY < 10) noY = yesRect.top + offset;
+                if (noY + noBtn.offsetHeight > window.innerHeight) noY = yesRect.bottom - noBtn.offsetHeight - offset;
+
+                noBtn.style.left = `${noX}px`;
+                noBtn.style.top = `${noY}px`;
+            } else {
+                // Lần cuối, YES phủ màn hình
+                yesBtn.style.width = "100vw";
+                yesBtn.style.height = "100vh";
+                yesBtn.style.fontSize = "15vw";
+                yesBtn.textContent = "YES";
+                yesBtn.style.zIndex = "999";
+
+                // Đảm bảo "Code by" không bị che
+                document.getElementById("credit").style.zIndex = "1000";
             }
         });
 
