@@ -7,6 +7,7 @@ body {
 
 h1 {
     font-size: 28px;
+    transition: 0.5s;
 }
 
 .container {
@@ -17,27 +18,39 @@ h1 {
 
 .btn {
     position: absolute;
-    font-size: 18px;
+    font-size: 24px;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 #yesBtn {
     left: 40%;
     background-color: green;
     color: white;
+    transition: all 0.5s ease;
 }
 
 #noBtn {
     left: 55%;
     background-color: red;
     color: white;
+    transition: all 0.5s ease;
 }
 
 #finalMessage {
     font-size: 40px;
     display: none;
     color: red;
+}
+
+#credit {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+    z-index: 1000;
 }
