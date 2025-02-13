@@ -1,63 +1,68 @@
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            margin-top: 100px;
-            overflow: hidden;
-        }
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 100px;
+    overflow: hidden;
+}
 
-        h1 {
-            font-size: 28px;
-            transition: 0.5s;
-        }
+.container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
 
-        .container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-        }
+.btn {
+    position: absolute;
+    font-size: 24px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-        .btn {
-            position: absolute;
-            font-size: 24px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+#yesBtn {
+    left: 40%;
+    background-color: green;
+    color: white;
+}
 
-        #yesBtn {
-            left: 40%;
-            background-color: green;
-            color: white;
-            transition: all 0.5s ease;
-        }
+#noBtn {
+    left: 55%;
+    background-color: red;
+    color: white;
+}
 
-        #noBtn {
-            left: 55%;
-            background-color: red;
-            color: white;
-            transition: all 0.5s ease;
-        }
+#finalMessage {
+    font-size: 40px;
+    display: none;
+    color: red;
+}
 
-        #finalMessage {
-            font-size: 40px;
-            display: none;
-            color: red;
-        }
+#credit {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+}
 
-        #credit {
-            position: fixed;
-            bottom: 10px;
-            right: 15px;
-            font-size: 14px;
-            color: black;
-            font-weight: bold;
-            z-index: 1000;
-        }
-        #valentineGif {
-            display: block;
-            margin: 0 auto;
-            width: 300px; /* Hoặc to hơn nếu muốn */
-            height: auto;
-        }
+/* GIF container */
+#gifContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+/* GIF nhỏ ban đầu */
+#gifImage {
+    width: 80px;
+}
+
+/* GIF lớn sau khi nhấn YES */
+.big {
+    width: 400px;
+    height: auto;
+}
