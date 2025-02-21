@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.3/brython.min.js"></script>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        canvas { background: black; display: block; margin: auto; }
+        .controls { display: flex; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+        .btn { width: 60px; height: 60px; font-size: 24px; margin: 5px; cursor: pointer; background: #008CBA; color: white; border: none; border-radius: 10px; }
+        .btn:active { background: #005F73; }
+        .up-down { display: flex; flex-direction: column; align-items: center; }
+        .left-right { display: flex; justify-content: center; }
+    </style>
+</head>
+<body onload="brython()">
+    <h2>🐍 Snake Game</h2>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+
+    <div class="controls">
+        <div class="up-down">
+            <button class="btn" onclick="change_direction('UP')">⬆️</button>
+            <div class="left-right">
+                <button class="btn" onclick="change_direction('LEFT')">⬅️</button>
+                <button class="btn" onclick="change_direction('RIGHT')">➡️</button>
+            </div>
+            <button class="btn" onclick="change_direction('DOWN')">⬇️</button>
+        </div>
+    </div>
+
+    <script type="text/python">
+        from browser import document, window
+        import random
+
+        canvas = document["gameCanvas"]
+        ctx = canvas.getContext("2d")
+        size = 20
+        snake = [[5, 5]]
+        direction = "RIGHT"
+        food = [random.randint(0, 19), random.randint(0, 19)]
+
+        def move_snake():
+            global snake, food, direction
+            head = snake[0][:]
+            if direction == "UP": head[1] -= 1
+            elif direction == "DOWN": head[1] += 1
+            elif direction == "LEFT": head[0] -= 1
+            elif direction == "RIGHT": head[0] += 1
+
+            if head in snake or head[0] < 0 or head[0] >= 20 or head[1] < 0 or head[1] >= 20:
+                window.alert("Game Over!")
+                snake.clear()
+                snake.append([5, 5])
+                return
+
+            snake.insert(0, head)
+            if head == food:
+                food[0] = random.randint(0, 19)
+                food[1] = random.randint(0, 19)
+            else:
+                snake.pop()
+
+        def draw():
+            ctx.clearRect(0, 0, 400, 400)
+            ctx.fillStyle = "red"
+            ctx.fillRect(food[0] * size, food[1] * size, size, size)
+            ctx.fillStyle = "lime"
+            for part in snake:
+                ctx.fillRect(part[0] * size, part[1] * size, size, size)
+
+        def update():
+            move_snake()
+            draw()
+            window.setTimeout(update, 200)
+
+        def change_direction(new_dir):
+            global direction
+            if (new_dir == "UP" and direction != "DOWN") or \
+               (new_dir == "DOWN" and direction != "UP") or \
+               (new_dir == "LEFT" and direction != "RIGHT") or \
+               (new_dir == "RIGHT" and direction != "LEFT"):
+                direction = new_dir
+
+        def on_key(event):
+            keys = {37: "LEFT", 38: "UP", 39: "RIGHT", 40: "DOWN"}
+            if event.keyCode in keys:
+                change_direction(keys[event.keyCode])
+
+        document.bind("keydown", on_key)
+        window.change_direction = change_direction
+        update()
+    </script>
+</body>
+</html>
