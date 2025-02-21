@@ -7,9 +7,9 @@
     <style>
         body { text-align: center; font-family: Arial, sans-serif; background: #222; color: white; }
         canvas { background: black; display: block; margin: auto; border: 2px solid white; }
-        .controls { display: flex; flex-direction: column; align-items: center; margin-top: 10px; }
-        .row { display: flex; justify-content: center; }
-        .btn { width: 60px; height: 60px; font-size: 24px; margin: 5px; cursor: pointer; background: #008CBA; color: white; border: none; border-radius: 10px; }
+        .controls { display: flex; flex-direction: column; align-items: center; margin-top: 20px; gap: 15px; }
+        .row { display: flex; justify-content: center; gap: 50px; }
+        .btn { width: 80px; height: 80px; font-size: 30px; cursor: pointer; background: #008CBA; color: white; border: none; border-radius: 15px; }
         .btn:active { background: #005F73; }
     </style>
 </head>
@@ -61,7 +61,6 @@
             if (direction === "LEFT") head.x -= box;
             if (direction === "RIGHT") head.x += box;
 
-            // **Xử lý màn hình vòng (wrap-around)**
             if (head.x < 0) head.x = canvas.width - box;
             if (head.x >= canvas.width) head.x = 0;
             if (head.y < 0) head.y = canvas.height - box;
@@ -105,7 +104,7 @@
             if (event.key === "ArrowRight") changeDirection("RIGHT");
         });
 
-        setInterval(update, 200);
+        setInterval(update, 150);
     </script>
 </body>
 </html>
