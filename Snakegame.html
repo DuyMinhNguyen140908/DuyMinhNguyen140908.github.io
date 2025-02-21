@@ -2,14 +2,18 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Snake Game</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; background: #222; color: white; }
         canvas { background: black; display: block; margin: auto; border: 2px solid white; }
         .controls { display: flex; flex-direction: column; align-items: center; margin-top: 20px; gap: 15px; }
         .row { display: flex; justify-content: center; gap: 50px; }
-        .btn { width: 80px; height: 80px; font-size: 30px; cursor: pointer; background: #008CBA; color: white; border: none; border-radius: 15px; }
+        .btn { 
+            width: 80px; height: 80px; font-size: 30px; cursor: pointer; 
+            background: #008CBA; color: white; border: none; border-radius: 15px;
+            touch-action: manipulation; /* Ngăn double tap zoom */
+        }
         .btn:active { background: #005F73; }
     </style>
 </head>
@@ -18,12 +22,12 @@
     <canvas id="gameCanvas" width="400" height="400"></canvas>
 
     <div class="controls">
-        <button class="btn" onclick="changeDirection('UP')">⬆️</button>
+        <button class="btn" id="btnUp">⬆️</button>
         <div class="row">
-            <button class="btn" onclick="changeDirection('LEFT')">⬅️</button>
-            <button class="btn" onclick="changeDirection('RIGHT')">➡️</button>
+            <button class="btn" id="btnLeft">⬅️</button>
+            <button class="btn" id="btnRight">➡️</button>
         </div>
-        <button class="btn" onclick="changeDirection('DOWN')">⬇️</button>
+        <button class="btn" id="btnDown">⬇️</button>
     </div>
 
     <script>
@@ -103,6 +107,11 @@
             if (event.key === "ArrowLeft") changeDirection("LEFT");
             if (event.key === "ArrowRight") changeDirection("RIGHT");
         });
+
+        document.getElementById("btnUp").addEventListener("touchstart", (e) => { e.preventDefault(); changeDirection("UP"); });
+        document.getElementById("btnDown").addEventListener("touchstart", (e) => { e.preventDefault(); changeDirection("DOWN"); });
+        document.getElementById("btnLeft").addEventListener("touchstart", (e) => { e.preventDefault(); changeDirection("LEFT"); });
+        document.getElementById("btnRight").addEventListener("touchstart", (e) => { e.preventDefault(); changeDirection("RIGHT"); });
 
         setInterval(update, 225);
     </script>
