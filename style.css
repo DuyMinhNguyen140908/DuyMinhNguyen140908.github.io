@@ -1,6 +1,12 @@
-.Line b{
+.Line{
+    margin-top: auto;
+    text-align: center;
+    padding: 30px;
+}
+.Line a,b{
     text-decoration: none;
-    font-size: 100px;
+    font-size: 64px;
     color: #333;
+    margin: 0 5px;
     transition: color 0.3 ease;
 }
