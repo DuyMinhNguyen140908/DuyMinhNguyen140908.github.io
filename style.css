@@ -67,3 +67,9 @@ body {
             width: 400px;  /* Tăng kích thước lên 400px */
             height: auto;  /* Giữ tỷ lệ */
         }
+.Line b{
+    text-decoration: none;
+    font-size: 100px;
+    color: #333;
+    transition: color 0.3 ease;
+}
